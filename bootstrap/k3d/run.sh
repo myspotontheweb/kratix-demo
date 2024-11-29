@@ -76,6 +76,16 @@ additionalResources:
     secretRef:
       name: minio-credentials
       namespace: default
+- apiVersion: platform.kratix.io/v1alpha1
+  kind: Destination
+  metadata:
+    name: worker-1
+    labels:
+      environment: dev
+  spec:
+    stateStoreRef:
+      name: default
+      kind: BucketStateStore
 END
 
 helm template kratix kratix --repo https://syntasso.github.io/helm-charts --version v$KRATIX_VERSION --namespace default -f kratix-values.yaml
@@ -83,7 +93,4 @@ helm template kratix kratix --repo https://syntasso.github.io/helm-charts --vers
 #
 # Install Kratix worker
 #
-cat <<END > kratix-destination-values.yaml
-END
-
-helm template kratix-destination kratix-destination --repo https://syntasso.github.io/helm-charts --version $KRATIX_VERSION --namespace default -f kratix-destination-values.yaml
+helm template kratix-destination kratix-destination --repo https://syntasso.github.io/helm-charts --version $KRATIX_VERSION --namespace default
